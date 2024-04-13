@@ -1,10 +1,11 @@
 import React from 'react';
+import NavBar from '../../components/NavBar/NavBar';
 import './search.css';
 
 function Search() {
     return (
         <div className="search">
-            <h1>SEARCH</h1>
+            <NavBar />
         </div>
     );
 }
