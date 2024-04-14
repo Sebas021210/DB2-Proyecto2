@@ -5,7 +5,12 @@ import './home.css';
 function Home() {
     return (
         <div className="Home">
-            <NavBar />
+            <div className="Home-NavBar">
+                <NavBar />
+            </div>
+            <div className="Home-Content">
+                <h1>HOME</h1>
+            </div>
         </div>
     );
 }

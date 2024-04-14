@@ -5,7 +5,12 @@ import './series.css';
 function Series() {
     return (
         <div className="Series">
-            <NavBar />
+            <div className="Series-NavBar">
+                <NavBar />
+            </div>
+            <div className="Series-Content">
+                <h1>SERIES</h1>
+            </div>
         </div>
     );
 }

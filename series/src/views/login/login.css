@@ -1,0 +1,28 @@
+.Login-Content{
+    height: 90vh;
+}
+
+.formLogin {
+    width: 40%;
+    height: 60%;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    border: 1px solid #000;
+    border-radius: 20px;
+    transform: translate(-50%, -50%);
+}
+
+.formLogin h1 {
+    text-align: center;
+    margin-top: 10%;
+    color: #000;
+}
+
+.contentForm{
+    display: flex;
+    justify-content: center;
+    margin-top: 10%;
+    height: 100%;
+    width: 100%;
+}

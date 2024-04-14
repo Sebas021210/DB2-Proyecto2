@@ -5,7 +5,12 @@ import './search.css';
 function Search() {
     return (
         <div className="search">
-            <NavBar />
+            <div className="Search-NavBar">
+                <NavBar />
+            </div>
+            <div className="Search-Content">
+                <h1>SEARCH</h1>
+            </div>
         </div>
     );
 }
