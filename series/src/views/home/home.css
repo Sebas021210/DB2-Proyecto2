@@ -1,3 +1,18 @@
 .Home-Content{
-    height: 90vh;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+}
+
+.Home-Cards h3{
+    text-align: center;
+    margin: 2rem 0;
+    margin-top: 3rem;
+}
+
+.contentCards{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 }

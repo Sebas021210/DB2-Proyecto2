@@ -13,10 +13,6 @@ function NavBar() {
         navigate("/home");
     }
 
-    const handleSeries = () => {
-        navigate("/series");
-    }
-
     const handleSearch = () => {
         navigate("/search");
     }
@@ -28,12 +24,11 @@ function NavBar() {
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
             <Container>
-                <Navbar.Brand href="#home">WATCHWISE</Navbar.Brand>
+                <Navbar.Brand>WATCHWISE</Navbar.Brand>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                 <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav>
                         <Nav.Link onClick={handleHome} >Mi perfil</Nav.Link>
-                        <Nav.Link onClick={handleSeries} >Recomendaciones</Nav.Link>
                         <Nav.Link onClick={handleSearch} >Buscar</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
