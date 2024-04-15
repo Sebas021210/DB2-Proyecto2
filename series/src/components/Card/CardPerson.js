@@ -66,41 +66,34 @@ function RecipeReviewCard() {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h4" component="div" style={{ color: "#000" }}>
-                            Serie
+                            Nombre
                         </Typography>
                     </Toolbar>
                 </AppBar>
                 <DialogContent>
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Sinopsis
+                        Edad
                     </Typography>
                     <DialogContentText>
                         Información...
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Número de temporadas
+                        Nacionalidad
                     </Typography>
                     <DialogContentText>
                         Información...
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Número de capitulos
+                        Premios
                     </Typography>
                     <DialogContentText>
                         Información...
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Director
-                    </Typography>
-                    <DialogContentText>
-                        Información...
-                    </DialogContentText>
-                    <br />
-                    <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Actores
+                        Series
                     </Typography>
                     <DialogContentText>
                         Información...
@@ -112,15 +105,6 @@ function RecipeReviewCard() {
                     <DialogContentText>
                         Información...
                     </DialogContentText>
-                    <br />
-                    <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Plataforma
-                    </Typography>
-                    <DialogContentText>
-                        Información...
-                    </DialogContentText>
-                    
-
                 </DialogContent>
                 <List>
                     <ListItemButton>
