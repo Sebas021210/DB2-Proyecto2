@@ -35,7 +35,7 @@ function NavBar() {
                 <Navbar.Collapse className="justify-content-end">
                     <NavDropdown title={<PersonIcon />} id="basic-nav-dropdown" style={{ right: "20px" }}>
                         <NavDropdown.Item onClick={handleLogout} >Cerrar sesion</NavDropdown.Item>
-                        <NavDropdown.Item>Eliminar cuenta</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleLogout} >Eliminar cuenta</NavDropdown.Item>
                     </NavDropdown>
                 </Navbar.Collapse>
             </Container>
