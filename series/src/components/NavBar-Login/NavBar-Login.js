@@ -10,11 +10,42 @@ import TextField from '@mui/material/TextField';
 import InputAdornment from '@mui/material/InputAdornment';
 import PersonAddIcon from '@mui/icons-material/PersonAdd';
 import AlternateEmailIcon from '@mui/icons-material/AlternateEmail';
-import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PasswordIcon from '@mui/icons-material/Password';
 import NumbersIcon from '@mui/icons-material/Numbers';
 
 function MyVerticallyCenteredModal(props) {
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [correo, setCorreo] = useState("");
+    const [contraseña, setContraseña] = useState("");
+    const [edad, setEdad] = useState("");
+    const [descripcion] = useState("");
+
+    const handleSubmit = async (e) => {
+        try {
+            const response = await fetch('http://localhost:5050/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ nombre, apellido, correo, contraseña, edad, descripcion })
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                console.log("Registrado con éxito");
+                props.onHide();
+            } else {
+                console.log("Error al registrarse");
+                console.log(response);
+            }
+        }
+        catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Modal
             {...props}
@@ -31,7 +62,7 @@ function MyVerticallyCenteredModal(props) {
                 <Form>
                     <Row className="mb-3">
                         <Form.Group as={Col} controlId="formGridName">
-                            <TextField fullWidth label="Nombre" id="fullWidth" name="name"
+                            <TextField fullWidth label="Nombre" id="fullWidth" name="name" value={nombre} onChange={(e) => setNombre(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -43,7 +74,7 @@ function MyVerticallyCenteredModal(props) {
                         </Form.Group>
 
                         <Form.Group as={Col} controlId="formGridName">
-                            <TextField fullWidth label="Apellido" id="fullWidth" name="secondName"
+                            <TextField fullWidth label="Apellido" id="fullWidth" name="secondName" value={apellido} onChange={(e) => setApellido(e.target.value)}
                                 InputProps={{
                                     startAdornment: (
                                         <InputAdornment position="start">
@@ -56,7 +87,7 @@ function MyVerticallyCenteredModal(props) {
                     </Row>
 
                     <Form.Group className="mb-3" controlId="formGridName">
-                        <TextField fullWidth label="Correo" id="fullWidth" name="mail"
+                        <TextField fullWidth label="Correo" id="fullWidth" name="mail" value={correo} onChange={(e) => setCorreo(e.target.value)}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -68,7 +99,7 @@ function MyVerticallyCenteredModal(props) {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formGridName">
-                        <TextField fullWidth label="Contraseña" id="fullWidth" name="password"
+                        <TextField fullWidth label="Contraseña" id="fullWidth" name="password" value={contraseña} onChange={(e) => setContraseña(e.target.value)}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -80,19 +111,7 @@ function MyVerticallyCenteredModal(props) {
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formGridName">
-                        <TextField fullWidth label="Usuario" id="fullWidth" name="user"
-                            InputProps={{
-                                startAdornment: (
-                                    <InputAdornment position="start">
-                                        <AccountCircleIcon />
-                                    </InputAdornment>
-                                )
-                            }}
-                        />
-                    </Form.Group>
-
-                    <Form.Group className="mb-3" controlId="formGridName">
-                        <TextField fullWidth label="Edad" id="fullWidth" name="age"
+                        <TextField fullWidth label="Edad" id="fullWidth" name="age" value={edad} onChange={(e) => setEdad(e.target.value)}
                             InputProps={{
                                 startAdornment: (
                                     <InputAdornment position="start">
@@ -107,7 +126,7 @@ function MyVerticallyCenteredModal(props) {
             <Modal.Footer>
                 <Button
                     style={{ backgroundColor: "transparent", borderColor: "black", color: "black" }}
-                    onClick={props.onHide}
+                    onClick={handleSubmit}
                 >
                     Registrarse
                 </Button>

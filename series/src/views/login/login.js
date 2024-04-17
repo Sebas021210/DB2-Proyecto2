@@ -11,14 +11,29 @@ import './login.css';
 
 function Login() {
     const navigate = useNavigate();
-    const [user, setUser] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
-    const handleSubmit = (event) => {
-        event.preventDefault();
+    const handleSubmit = async (e) => {
+        try {
+            const response = await fetch('http://localhost:5050/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password })
+            });
 
-        if (user === "admin" && password === "admin") {
-            navigate("/home", { replace: true });
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                navigate('/home');
+            } else {
+                console.log("Error al iniciar sesión");
+            }
+        }
+        catch (error) {
+            console.log(error);
         }
     }
 
@@ -33,7 +48,7 @@ function Login() {
                     <div className="contentForm">
                         <Form style={{ width: "70%" }}>
                             <Form.Group className="mb-3" controlId="formGridName">
-                                <TextField fullWidth label="Usuario" id="fullWidth" name="user" value={user} onChange={(e) => setUser(e.target.value)}
+                                <TextField fullWidth label="Usuario" id="fullWidth" name="user" value={email} onChange={(e) => setEmail(e.target.value)}
                                     InputProps={{
                                         startAdornment: (
                                             <InputAdornment position="start">
