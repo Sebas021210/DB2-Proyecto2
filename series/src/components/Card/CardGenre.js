@@ -23,7 +23,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-function RecipeReviewCard() {
+function RecipeReviewCard(props) {
     const [openDialog, setOpenDialog] = useState(false);
 
     const handleCardClick = () => {
@@ -37,7 +37,7 @@ function RecipeReviewCard() {
     return (
         <React.Fragment>
             <Card sx={{ minWidth: 300 }} style={{ cursor: "pointer" }}>
-                <CardHeader title="NOMBRE" />
+                <CardHeader title={props.name} />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
                         Popularidad
@@ -70,7 +70,7 @@ function RecipeReviewCard() {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h4" component="div" style={{ color: "#000" }}>
-                            Género
+                            {props.name}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -79,14 +79,14 @@ function RecipeReviewCard() {
                         Descripción
                     </Typography>
                     <DialogContentText>
-                        Información...
+                        {props.des}
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
                         Número de series
                     </Typography>
                     <DialogContentText>
-                        Información...
+                        {props.numSeries}
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>

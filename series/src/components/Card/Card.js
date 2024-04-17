@@ -119,7 +119,7 @@ function MyVerticallyCenteredModal(props) {
     );
 }
 
-function RecipeReviewCard() {
+function RecipeReviewCard(props) {
     const [openDialog, setOpenDialog] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
 
@@ -133,11 +133,11 @@ function RecipeReviewCard() {
 
     return (
         <React.Fragment>
-            <Card sx={{ minWidth: 300 }} style={{ cursor: "pointer" }}>
-                <CardHeader title="NOMBRE" />
+            <Card sx={{ minWidth: 300, maxWidth: 301 }} style={{ cursor: "pointer" }}>
+                <CardHeader title={props.title} />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
-                        Popularidad
+                        {props.rating}
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
@@ -171,7 +171,7 @@ function RecipeReviewCard() {
                             <CloseIcon />
                         </IconButton>
                         <Typography sx={{ ml: 2, flex: 1 }} variant="h4" component="div" style={{ color: "#000" }}>
-                            Serie
+                            {props.title}
                         </Typography>
                     </Toolbar>
                 </AppBar>
@@ -180,21 +180,21 @@ function RecipeReviewCard() {
                         Sinopsis
                     </Typography>
                     <DialogContentText>
-                        Información...
-                    </DialogContentText>
-                    <br />
-                    <Typography variant="h6" component="div" style={{ color: "#000" }}>
-                        Número de temporadas
-                    </Typography>
-                    <DialogContentText>
-                        Información...
+                        {props.description} 
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
                         Número de capitulos
                     </Typography>
                     <DialogContentText>
-                        Información...
+                        {props.Total_caps}
+                    </DialogContentText>
+                    <br />
+                    <Typography variant="h6" component="div" style={{ color: "#000" }}>
+                        Duración de los capitulos
+                    </Typography>
+                    <DialogContentText>
+                        {props.duration}
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
