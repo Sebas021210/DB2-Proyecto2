@@ -6,6 +6,7 @@ import CardActions from '@mui/material/CardActions';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Dialog from '@mui/material/Dialog';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
@@ -35,7 +36,7 @@ function RecipeReviewCard() {
 
     return (
         <React.Fragment>
-            <Card sx={{ minWidth: 300 }} onClick={handleCardClick} style={{ cursor: "pointer" }}>
+            <Card sx={{ minWidth: 300 }} style={{ cursor: "pointer" }}>
                 <CardHeader title="NOMBRE" />
                 <CardContent>
                     <Typography variant="body2" color="text.secondary">
@@ -45,6 +46,9 @@ function RecipeReviewCard() {
                 <CardActions disableSpacing>
                     <IconButton aria-label="add to favorites">
                         <FavoriteIcon />
+                    </IconButton>
+                    <IconButton aria-label="more" onClick={handleCardClick} >
+                        <MoreVertIcon />
                     </IconButton>
                 </CardActions>
             </Card>
