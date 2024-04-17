@@ -203,7 +203,7 @@ function Home() {
                                 key={platform.id}
                                 name={platform.name}
                                 tipo={platform.tipo}
-                                precio={platform.precio.low}
+                                precio={platform.precio}
                                 lanzamiento={platform.lanzamiento}
                             />
                         ))}
