@@ -224,8 +224,6 @@ function RecipeReviewCard() {
                     <DialogContentText>
                         Información...
                     </DialogContentText>
-
-
                 </DialogContent>
                 <List>
                     <ListItemButton>
