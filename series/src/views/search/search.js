@@ -13,7 +13,6 @@ function Search() {
     const [Directors, setDirectors] = useState([]);
     const [Genres, setGenres] = useState([]);
     const [Platforms, setPlatforms] = useState([]);
-
     const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {

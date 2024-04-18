@@ -26,8 +26,13 @@ function Login() {
 
             if (response.ok) {
                 const data = await response.json();
+                console.log(response)
                 console.log(data);
                 localStorage.setItem('email', email);
+                localStorage.setItem('nombre', data.name);
+                localStorage.setItem('apellido', data.apellido);
+                localStorage.setItem('contrasena', data.contrasena);
+                localStorage.setItem('descripcion', data.descripcion);
                 navigate('/home');
             } else {
                 console.log("Error al iniciar sesión");

@@ -51,6 +51,72 @@ const optionEstado = [
 ];
 
 function MyVerticallyCenteredModal(props) {
+    const [estado, setEstado] = useState(null);
+    const [rating, setRating] = useState("");
+    const [repeticiones, setRepeticiones] = useState("");
+
+    const handleEstadoChange = (event, value) => {
+        if (value) {
+            if (value.value === 'Viendo') {
+                setEstado(true);
+                console.log(estado);
+                console.log(typeof (estado));
+            } else if (value.value === 'Terminado') {
+                setEstado(false);
+                console.log(estado);
+                console.log(typeof (estado));
+            }
+        } else {
+            setEstado("");
+        }
+    };
+
+    const handleRatingChange = (event, value) => {
+        setRating(value ? parseInt(value.value) : 0);
+        console.log(value);
+        console.log(typeof (value.value));
+    };
+
+    const handleRepeticionesChange = (event, value) => {
+        setRepeticiones(value ? parseInt(value.value) : 0);
+        console.log(value);
+        console.log(typeof (value.value));
+    };
+
+    const handleSubmit = async (e) => {
+        try {
+            const requestData = {
+                email: localStorage.getItem('email'),
+                serie: props.title,
+                estado: estado,
+                rating: rating,
+                repeticiones: repeticiones
+            };
+
+            console.log("Cuerpo de la solicitud:", requestData);
+
+            const response = await fetch('http://localhost:5050/addFavoriteSeries', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(requestData)
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data);
+                console.log("Serie agregada a favoritos");
+                props.onHide();
+            } else {
+                console.log("Error al agregar la serie a favoritos");
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Modal
             {...props}
@@ -72,10 +138,8 @@ function MyVerticallyCenteredModal(props) {
                             options={optionCalificacion}
                             getOptionLabel={(option) => option.label}
                             renderInput={(params) => <TextField {...params} label="Calificación" />}
-                            onChange={(event, value) => {
-                                console.log('Opción seleccionada:', value);
-                                console.log(typeof value.value);
-                            }}
+                            onChange={handleRatingChange}
+
                         />
                     </Form.Group>
 
@@ -86,10 +150,8 @@ function MyVerticallyCenteredModal(props) {
                             options={optionVisualizaciones}
                             getOptionLabel={(option) => option.label}
                             renderInput={(params) => <TextField {...params} label="Veces vista" />}
-                            onChange={(event, value) => {
-                                console.log('Opción seleccionada:', value);
-                                console.log(typeof value.value);
-                            }}
+                            onChange={handleRepeticionesChange}
+
                         />
                     </Form.Group>
 
@@ -100,10 +162,8 @@ function MyVerticallyCenteredModal(props) {
                             options={optionEstado}
                             getOptionLabel={(option) => option.label}
                             renderInput={(params) => <TextField {...params} label="Estado de visualización" />}
-                            onChange={(event, value) => {
-                                console.log('Opción seleccionada:', value);
-                                console.log(typeof value.value);
-                            }}
+                            onChange={handleEstadoChange}
+
                         />
                     </Form.Group>
                 </Form>
@@ -111,7 +171,7 @@ function MyVerticallyCenteredModal(props) {
             <Modal.Footer>
                 <Button
                     style={{ backgroundColor: "transparent", borderColor: "black", color: "black" }}
-                    onClick={props.onHide}
+                    onClick={handleSubmit}
                 >
                     Agregar a favoritos
                 </Button>
@@ -123,6 +183,7 @@ function MyVerticallyCenteredModal(props) {
 function RecipeReviewCard(props) {
     const [openDialog, setOpenDialog] = useState(false);
     const [modalShow, setModalShow] = React.useState(false);
+    const [isFavorite] = useState(props.isFavorite);
 
     const handleCardClick = () => {
         setOpenDialog(true);
@@ -163,19 +224,24 @@ function RecipeReviewCard(props) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites" onClick={() => setModalShow(true)}>
-                        <FavoriteIcon />
-                    </IconButton>
+                    {isFavorite ? null : (
+                        <IconButton aria-label="add to favorites" onClick={() => setModalShow(true)}>
+                            <FavoriteIcon />
+                        </IconButton>
+                    )}
                     <MyVerticallyCenteredModal
                         show={modalShow}
                         onHide={() => setModalShow(false)}
+                        title={props.title}
                     />
                     <IconButton aria-label="more" onClick={handleCardClick} >
                         <MoreVertIcon />
                     </IconButton>
-                    <IconButton aria-label="delete" onClick={handleDelete} >
-                        <DeleteIcon />
-                    </IconButton>
+                    {isFavorite ? (
+                        <IconButton aria-label="delete" onClick={handleDelete}>
+                            <DeleteIcon />
+                        </IconButton>
+                    ) : null}
                 </CardActions>
             </Card>
 

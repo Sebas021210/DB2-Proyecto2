@@ -150,6 +150,7 @@ function Home() {
                                 year={series.year}
                                 duration={series.Duracion}
                                 Total_caps={series.Total_caps}
+                                isFavorite={true}
                             />
                         ))}
                     </div>
@@ -164,6 +165,7 @@ function Home() {
                                 nacionalidad={actor.nacionalidad}
                                 edad={actor.edad}
                                 premiado={actor.premiado}
+                                isFavorite={true}
                             />
                         ))}
                     </div>
@@ -178,6 +180,7 @@ function Home() {
                                 nacionalidad={director.nacionalidad}
                                 edad={director.edad}
                                 premiado={director.premiado}
+                                isFavorite={true}
                             />
                         ))}
                     </div>
@@ -191,6 +194,7 @@ function Home() {
                                 name={genre.name}
                                 des={genre.descripcion}
                                 numSeries={genre.numSeries}
+                                isFavorite={true}
                             />
                         ))}
                     </div>
@@ -205,6 +209,7 @@ function Home() {
                                 tipo={platform.tipo}
                                 precio={platform.precio}
                                 lanzamiento={platform.lanzamiento}
+                                isFavorite={true}
                             />
                         ))}
                     </div>

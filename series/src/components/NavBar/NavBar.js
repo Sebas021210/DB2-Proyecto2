@@ -8,6 +8,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
+import IconButton from '@mui/material/IconButton';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 function MyVerticallyCenteredModal(props) {
     const [showPasswordForm, setShowPasswordForm] = useState(false);
@@ -23,15 +25,88 @@ function MyVerticallyCenteredModal(props) {
         setShowDescriptionForm(false);
     }, [props.show]);
 
-    const handlePasswordUpdate = () => {
-        console.log("Nueva contraseña:", newPassword);
-        props.onHide();
+    const handlePasswordUpdate = async () => {
+        try {
+            const requestData = { email: localStorage.getItem('email'), password: newPassword };
+            console.log("Request data:", requestData);
+
+            const email = localStorage.getItem('email');
+            const response = await fetch('http://localhost:5050/updatePassword', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, password: newPassword })
+            });
+
+            if (response.ok) {
+                console.log("Contraseña actualizada");
+                props.onHide();
+            } else {
+                console.log("Error al actualizar la contraseña", response.status);
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
 
-    const handleDescriptionUpdate = () => {
-        console.log("Nueva descripción:", newDescription);
-        props.onHide();
+    const handleDescriptionUpdate = async () => {
+        try {
+            const email = localStorage.getItem('email');
+            const response = await fetch('http://localhost:5050/addProperty', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email, value: newDescription })
+            });
+
+            if (response.ok) {
+                console.log("Descripción actualizada");
+                props.onHide();
+                localStorage.setItem('descripcion', newDescription);
+            } else {
+                console.log("Error al actualizar la descripción", response.status);
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
     }
+
+    useEffect(() => {
+        const descripcion = localStorage.getItem('descripcion');
+        setNewDescription(descripcion);
+    }, [props.show]);
+
+    const handleDeleteDescription = async () => {
+        try {
+            const email = localStorage.getItem('email');
+            const response = await fetch('http://localhost:5050/deleteProperty', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+
+            if (response.ok) {
+                console.log("Descripción eliminada");
+                props.onHide();
+                localStorage.setItem('descripcion', "");
+            } else {
+                console.log("Error al eliminar la descripción", response.status);
+                console.log(response);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+    const email = localStorage.getItem('email');
+    const descripcion = localStorage.getItem('descripcion');
+    console.log(descripcion)
 
     return (
         <Modal
@@ -46,24 +121,10 @@ function MyVerticallyCenteredModal(props) {
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body>
-                <h6>Nombre</h6>
-                <p>Información...</p>
-                <br />
-                <h6>Apellido</h6>
-                <p>Información...</p>
-                <br />
                 <h6>Correo</h6>
-                <p>Información...</p>
-                <br />
-                <h6>Contraseña</h6>
-                <p>Información...</p>
-                <br />
-                <h6>Edad</h6>
-                <p>Información...</p>
-                <br />
+                <p>{email}</p>
                 <h6>Descripción</h6>
-                <p>{newDescription}</p>
-                <br />
+                <p>{descripcion}</p>
                 {showPasswordForm && (
                     <Form>
                         <Form.Group controlId="formBasicPassword">
@@ -92,12 +153,9 @@ function MyVerticallyCenteredModal(props) {
                 ) : (
                     <Button style={{ backgroundColor: "transparent", borderColor: "black", color: "black" }} onClick={handleDescriptionUpdate}>Guardar</Button>
                 )}
-                <Button
-                    style={{ backgroundColor: "transparent", borderColor: "black", color: "black" }}
-                    onClick={props.onHide}
-                >
-                    Cerrar
-                </Button>
+                <IconButton aria-label="delete" onClick={handleDeleteDescription} >
+                    <DeleteIcon />
+                </IconButton>
             </Modal.Footer>
         </Modal>
     );
@@ -119,6 +177,29 @@ function NavBar() {
         navigate("/", { replace: true });
     }
 
+    const handleDeleteAccount = async () => {
+        const email = localStorage.getItem('email');
+
+        try {
+            const response = await fetch('http://localhost:5050/deleteUsuario', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ email })
+            });
+
+            if (response.ok) {
+                console.log("Cuenta eliminada");
+                navigate("/", { replace: true });
+            } else {
+                console.log("Error al eliminar la cuenta", response.status);
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
     return (
         <Navbar collapseOnSelect expand="lg" className="bg-body-tertiary">
             <Container>
@@ -134,7 +215,7 @@ function NavBar() {
                     <NavDropdown title={<PersonIcon />} id="basic-nav-dropdown" style={{ right: "20px" }}>
                         <NavDropdown.Item onClick={() => setModalShow(true)} >Mi perfil</NavDropdown.Item>
                         <NavDropdown.Item onClick={handleLogout} >Cerrar sesion</NavDropdown.Item>
-                        <NavDropdown.Item onClick={handleLogout} >Eliminar cuenta</NavDropdown.Item>
+                        <NavDropdown.Item onClick={handleDeleteAccount} >Eliminar cuenta</NavDropdown.Item>
 
                         <MyVerticallyCenteredModal
                             show={modalShow}

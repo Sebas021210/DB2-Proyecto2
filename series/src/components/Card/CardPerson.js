@@ -18,6 +18,7 @@ import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import CloseIcon from '@mui/icons-material/Close';
 import Slide from '@mui/material/Slide';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -25,6 +26,7 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 
 function RecipeReviewCard(props) {
     const [openDialog, setOpenDialog] = useState(false);
+    const [isFavorite] = useState(props.isFavorite);
 
     const handleCardClick = () => {
         setOpenDialog(true);
@@ -33,6 +35,27 @@ function RecipeReviewCard(props) {
     const handleCloseDialog = () => {
         setOpenDialog(false);
     };
+
+    const handleDelete = () => {
+        fetch("http://localhost:5050/deleteFavoriteActor", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: localStorage.getItem("email"),
+                actor: props.name
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                console.log("Serie eliminada de favoritos");
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
 
     return (
         <React.Fragment>
@@ -44,11 +67,16 @@ function RecipeReviewCard(props) {
                     </Typography>
                 </CardContent>
                 <CardActions disableSpacing>
-                    <IconButton aria-label="add to favorites">
-                        <FavoriteIcon />
-                    </IconButton>
+                    {isFavorite ? null : (
+                        <IconButton aria-label="add to favorites" >
+                            <FavoriteIcon />
+                        </IconButton>
+                    )}
                     <IconButton aria-label="more" onClick={handleCardClick} >
                         <MoreVertIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete" onClick={handleDelete}>
+                        <DeleteIcon />
                     </IconButton>
                 </CardActions>
             </Card>
