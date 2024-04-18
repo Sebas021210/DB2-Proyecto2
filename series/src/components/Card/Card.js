@@ -23,6 +23,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import Autocomplete from '@mui/material/Autocomplete';
 import TextField from '@mui/material/TextField';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -131,6 +132,27 @@ function RecipeReviewCard(props) {
         setOpenDialog(false);
     };
 
+    const handleDelete = () => {
+        fetch("http://localhost:5050/deleteFavoriteSeries", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                email: localStorage.getItem("email"),
+                serie: props.title
+            }),
+        })
+            .then((response) => response.json())
+            .then((data) => {
+                console.log(data);
+                console.log("Serie eliminada de favoritos");
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+            });
+    }
+
     return (
         <React.Fragment>
             <Card sx={{ minWidth: 300, maxWidth: 301 }} style={{ cursor: "pointer" }}>
@@ -150,6 +172,9 @@ function RecipeReviewCard(props) {
                     />
                     <IconButton aria-label="more" onClick={handleCardClick} >
                         <MoreVertIcon />
+                    </IconButton>
+                    <IconButton aria-label="delete" onClick={handleDelete} >
+                        <DeleteIcon />
                     </IconButton>
                 </CardActions>
             </Card>
