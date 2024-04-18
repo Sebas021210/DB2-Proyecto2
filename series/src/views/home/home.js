@@ -15,7 +15,7 @@ function Home() {
 
     useEffect(() => {
         const email = localStorage.getItem('email');
-    
+
         const fetchData = async () => {
             try {
                 const seriesResponse = await fetch('http://localhost:5050/getFavoriteSeries', {
@@ -25,7 +25,7 @@ function Home() {
                     },
                     body: JSON.stringify({ email })
                 });
-    
+
                 if (seriesResponse.ok) {
                     const dataSeries = await seriesResponse.json();
                     const uniqueSeries = dataSeries.filter((serie, index, self) =>
@@ -38,15 +38,15 @@ function Home() {
                 } else {
                     console.log("Error al obtener las series favoritas", seriesResponse.status);
                 }
-    
-                const actorsResponse = await fetch('http://localhost:5050/getViewedActors', {
-                    method: 'POST',
+
+                const parts = email.split("@");
+                const actorsResponse = await fetch(`http://localhost:5050/getViewedActors?email=${parts[0]}%40${parts[1]}`, {
+                    method: 'GET',
                     headers: {
                         'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({ email })
+                    }
                 });
-    
+
                 if (actorsResponse.ok) {
                     const dataActores = await actorsResponse.json();
                     const uniqueActors = dataActores.filter((actor, index, self) =>
@@ -122,12 +122,12 @@ function Home() {
                 } else {
                     console.log("Error al obtener las plataformas favoritas", platformsResponse.status);
                 }
-                
+
             } catch (error) {
                 console.log(error);
             }
         }
-    
+
         fetchData();
     }, []);
 

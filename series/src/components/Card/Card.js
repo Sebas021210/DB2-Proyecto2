@@ -180,7 +180,7 @@ function RecipeReviewCard(props) {
                         Sinopsis
                     </Typography>
                     <DialogContentText>
-                        {props.description} 
+                        {props.description}
                     </DialogContentText>
                     <br />
                     <Typography variant="h6" component="div" style={{ color: "#000" }}>
